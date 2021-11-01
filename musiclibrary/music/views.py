@@ -1,4 +1,5 @@
 
+from django.db.models import fields
 from django.http.response import Http404
 from django.shortcuts import render
 from .models import Song
@@ -55,11 +56,11 @@ class SongLike(APIView):
             return Song.objects.get(pk=pk)
         except Song.DoesNotExist:
             raise Http404
-            
+
     def put(self,request,pk):
         song = self.get_object(pk)
-        serializer = SongSerializer(song.likes, data = request.data)
-        serializer += 1
+        serializer = SongSerializer.increase_like(song, song.like)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

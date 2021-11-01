@@ -6,5 +6,8 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         fields = ['id','title','artist','album','release_date','genre','likes']
+        like = serializers.SerializerMethodField('increase_like' )
 
-    
+    def increase_like(self, obj):
+        obj.like += 1
+        obj.save()
