@@ -61,6 +61,7 @@ class SongLike(APIView):
         song = self.get_object(pk)
         serializer = SongSerializer.increase_like(song, song)
         
+        
        
-        return Response(status=status.HTTP_200_OK)
+        return Response(serializer,status=status.HTTP_200_OK)
        
